@@ -1,6 +1,6 @@
-import { Button, Flex, Icon, IconButton, Input, Text, useColorModeValue, VStack } from "@chakra-ui/react"
+import { Flex, Text, VStack } from "@chakra-ui/react"
 import { useState } from "react"
-import FormInput from "../components/authentication/FormInput"
+import FloatingButton from "../components/tasks/FloatingButton";
 
 const ToDoPage = () => {
 
@@ -10,25 +10,10 @@ const ToDoPage = () => {
         setTodoList((prev) => [...prev, element]);
     };
 
+
     return (
         <Flex justify={"center"} width={"100%"} p={5}>
-            <IconButton
-                icon={<Icon />}
-                colorScheme="teal"
-                aria-label="Add"
-                size="lg"
-                position="fixed"
-                bottom="6"
-                right="6"
-                borderRadius="full"
-                boxShadow="lg"
-                bg={useColorModeValue('teal.500', 'teal.300')}
-                color={useColorModeValue('white', 'gray.800')}
-                _hover={{ bg: useColorModeValue('teal.600', 'teal.400') }}
-                _active={{ bg: useColorModeValue('teal.700', 'teal.500') }}
-                onClick={() => {console.log("AA")}}
-                />
-
+            <FloatingButton/>
             <VStack spacing={4} shadow={"md"} width={'60%'}>
                 {todoList.map((todo, index) => (
                     <Text key={index}>{todo}</Text>
