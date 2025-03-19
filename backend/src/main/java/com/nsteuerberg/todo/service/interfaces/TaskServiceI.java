@@ -6,4 +6,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface TaskServiceI {
     ResponseEntity<NewTaskResponse> createTask(NewTaskRequest newTaskRequest);
+    ResponseEntity<?> deleteTask(Long id);
 }

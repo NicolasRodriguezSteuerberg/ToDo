@@ -8,14 +8,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/task")
+@RequestMapping("/tasks")
 public class TaskController {
 
     @Autowired
     private TaskServiceImpl taskService;
 
-    @PostMapping("")
+    @PostMapping()
     public ResponseEntity<?> addTask(@RequestBody @Valid NewTaskRequest newTask) {
         return taskService.createTask(newTask);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteTask(@PathVariable Long id){
+        return taskService.deleteTask(id);
     }
 }
