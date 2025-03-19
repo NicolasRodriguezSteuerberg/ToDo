@@ -7,13 +7,18 @@
   - [ ] Recoger todas las tareas
   - [ ] Recoger todas las tareas filtradas por completado o no completo
   - [ ] Recoger todas las tareas filtradas por fecha de creación
-  - [ ] Añadir una tarea
+  - [x] Agregar una tarea
   - [ ] Modificar una tarea identificada por id
-  - [ ] Eliminar una tarea identificada por id
+  - [x] Eliminar una tarea identificada por id
 
 ### Frontend
-- [ ] Página de inicio de sesión/registro
+- [x] Página de inicio de sesión/registro
+  - [ ] Modificarlo para que haga llamadas a la api
 - [ ] Página para mirar, eliminar y modificar tareas
+  - [x] Visualización de tareas
+  - [ ] Modificar la visualización de tareas por las tareas del backend
+  - [ ] Eliminar tareas
+  - [ ] Modificar tareas
 
 
 ## Tecnologías
