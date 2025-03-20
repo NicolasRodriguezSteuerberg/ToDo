@@ -15,6 +15,12 @@ public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /**
+     * @ManyToOne(fetch = FetchType.LAZY)
+     * @JoinColumn(name = "user_id")
+     * private User userId;
+     */
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
