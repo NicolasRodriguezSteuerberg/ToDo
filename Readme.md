@@ -3,13 +3,15 @@
 ## CheckList
 ### Backend
 - [ ] Autorización y autenticación: JWT login + register + correo para inicio/registro de sesión
+
+> [!WARNING] Posiblemente no hiciera falta los roles + permissions
 - [ ] CRUD tareas
   - [ ] Recoger todas las tareas
   - [ ] Recoger todas las tareas filtradas por completado o no completo
   - [ ] Recoger todas las tareas filtradas por fecha de creación
-  - [x] Agregar una tarea
+  - [ ] Agregar una tarea
   - [ ] Modificar una tarea identificada por id
-  - [x] Eliminar una tarea identificada por id
+  - [ ] Eliminar una tarea identificada por id
 
 ### Frontend
 - [x] Página de inicio de sesión/registro
