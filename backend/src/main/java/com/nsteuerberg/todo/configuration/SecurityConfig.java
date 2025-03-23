@@ -1,6 +1,9 @@
 package com.nsteuerberg.todo.configuration;
 
+import com.nsteuerberg.todo.configuration.filter.JwtTokenFilter;
 import com.nsteuerberg.todo.service.implementation.UserDetailServiceImpl;
+import com.nsteuerberg.todo.util.jwt.JwtTokenValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +20,7 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import java.security.Provider;
 
@@ -25,17 +29,23 @@ import java.security.Provider;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private JwtTokenValidator jwtTokenValidator;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 // Desactivarla cuando no se va a usar Basic Authentications
-                // .httpBasic(http -> http.disable())
-                .httpBasic(Customizer.withDefaults())
+                .httpBasic(http -> http.disable())
+                //.httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated()
+                )
+                .addFilterBefore(
+                        new JwtTokenFilter(jwtTokenValidator), BasicAuthenticationFilter.class
                 )
                 .build();
     }

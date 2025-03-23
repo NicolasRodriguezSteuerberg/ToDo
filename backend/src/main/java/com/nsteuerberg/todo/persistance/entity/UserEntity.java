@@ -19,7 +19,7 @@ public class UserEntity {
     private Long userId;
     @Column(name = "username", unique = true)
     private String userName;
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String userEmail;
     @Column(name = "password")
     private String userPassword;

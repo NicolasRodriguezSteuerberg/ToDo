@@ -3,6 +3,7 @@ package com.nsteuerberg.todo;
 import com.nsteuerberg.todo.persistance.entity.PermissionEntity;
 import com.nsteuerberg.todo.persistance.entity.RoleEntity;
 import com.nsteuerberg.todo.persistance.entity.UserEntity;
+import com.nsteuerberg.todo.persistance.repository.RoleRepository;
 import com.nsteuerberg.todo.persistance.repository.UserRepository;
 import com.nsteuerberg.todo.util.constant.PermissionEnum;
 import com.nsteuerberg.todo.util.constant.RoleEnum;
@@ -10,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.User;
 
 import java.util.List;
 import java.util.Set;
@@ -49,13 +51,20 @@ public class BackendApplication {
 					.permissionList(Set.of(createPermission, readPermission, updatePermission, deletePermission))
 					.build();
 
-			// create users
 			UserEntity userNico = UserEntity.builder()
 					.userName("nico")
+					.userEmail("nico@gmail.com")
 					.userPassword("1234")
 					.roleList(Set.of(roleDeveloper))
 					.build();
-			userRepository.save(userNico);
+			UserEntity userIrene = UserEntity.builder()
+					.userName("irene")
+					.userEmail("irene@gmail.com")
+					.userPassword("1234")
+					.roleList(Set.of(roleUser))
+					.build();
+			userRepository.saveAll(List.of(userNico, userIrene));
+
 		};
 	}
 }
