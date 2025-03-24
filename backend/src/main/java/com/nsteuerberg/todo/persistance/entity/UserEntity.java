@@ -3,6 +3,7 @@ package com.nsteuerberg.todo.persistance.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -31,4 +32,12 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<RoleEntity> roleList;
+
+    // fetch Lazy por defecto
+    @OneToMany(
+            mappedBy = "user", // indica que la relacion es bidereccional
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<TaskEntity> tasks;
 }

@@ -54,13 +54,13 @@ public class BackendApplication {
 			UserEntity userNico = UserEntity.builder()
 					.userName("nico")
 					.userEmail("nico@gmail.com")
-					.userPassword("1234")
+					.userPassword("$argon2id$v=19$m=16384,t=2,p=1$vJxb+NSI1JCIkWjcc4cr6g$bL+5FO2wcY+J5BAOMw/bcjPiNldu2f7FhkNmF/aNF1k")
 					.roleList(Set.of(roleDeveloper))
 					.build();
 			UserEntity userIrene = UserEntity.builder()
 					.userName("irene")
 					.userEmail("irene@gmail.com")
-					.userPassword("1234")
+					.userPassword("$argon2id$v=19$m=16384,t=2,p=1$vJxb+NSI1JCIkWjcc4cr6g$bL+5FO2wcY+J5BAOMw/bcjPiNldu2f7FhkNmF/aNF1k")
 					.roleList(Set.of(roleUser))
 					.build();
 			userRepository.saveAll(List.of(userNico, userIrene));

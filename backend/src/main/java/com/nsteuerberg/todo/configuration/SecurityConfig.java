@@ -66,7 +66,6 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         // ToDo cambiar tipo de encoder
-        // return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
-        return NoOpPasswordEncoder.getInstance();
+        return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
     }
 }

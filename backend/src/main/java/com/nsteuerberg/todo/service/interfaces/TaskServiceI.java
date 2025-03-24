@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface TaskServiceI {
-    ResponseEntity<TaskResponse> createTask(NewTaskRequest newTaskRequest);
-    ResponseEntity<?> deleteTask(Long id);
-    ResponseEntity<List<TaskResponse>> getAllTasks();
+    ResponseEntity<TaskResponse> createTask(NewTaskRequest newTaskRequest, String username);
+    ResponseEntity<?> deleteTask(Long id, String username);
+    ResponseEntity<List<TaskResponse>> getAllTasks(String username);
     ResponseEntity<TaskResponse> getTaskById();
 }
