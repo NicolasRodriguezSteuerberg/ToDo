@@ -1,6 +1,7 @@
 package com.nsteuerberg.todo.service.interfaces;
 
 import com.nsteuerberg.todo.presentation.dto.request.NewTaskRequest;
+import com.nsteuerberg.todo.presentation.dto.request.TaskUpdateRequest;
 import com.nsteuerberg.todo.presentation.dto.response.TaskResponse;
 import org.springframework.http.ResponseEntity;
 
@@ -11,4 +12,5 @@ public interface TaskServiceI {
     ResponseEntity<?> deleteTask(Long id, String username);
     ResponseEntity<List<TaskResponse>> getAllTasks(String username);
     ResponseEntity<TaskResponse> getTaskById();
+    ResponseEntity<TaskResponse> updateTask(TaskUpdateRequest updateRequest, String username);
 }

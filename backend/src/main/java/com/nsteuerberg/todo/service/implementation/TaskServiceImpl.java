@@ -5,9 +5,11 @@ import com.nsteuerberg.todo.persistance.entity.UserEntity;
 import com.nsteuerberg.todo.persistance.repository.TaskRepository;
 import com.nsteuerberg.todo.persistance.repository.UserRepository;
 import com.nsteuerberg.todo.presentation.dto.request.NewTaskRequest;
+import com.nsteuerberg.todo.presentation.dto.request.TaskUpdateRequest;
 import com.nsteuerberg.todo.presentation.dto.response.TaskResponse;
 import com.nsteuerberg.todo.service.exception.AccessDeniedException;
 import com.nsteuerberg.todo.service.exception.TaskNotFound;
+import com.nsteuerberg.todo.service.exception.TaskValidationException;
 import com.nsteuerberg.todo.service.interfaces.TaskServiceI;
 import com.nsteuerberg.todo.util.date.DateTimeFormatterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +33,12 @@ public class TaskServiceImpl implements TaskServiceI {
     @Override
     public ResponseEntity<TaskResponse> createTask(NewTaskRequest newTaskRequest, String username) {
         UserEntity user = userRepository.findByUserName(username).orElseThrow(() -> new BadCredentialsException("aaa"));
+        String date = DateTimeFormatterUtil.format(LocalDateTime.now());
         TaskEntity task = TaskEntity.builder()
                 .title(newTaskRequest.title())
-                .createdIn(DateTimeFormatterUtil.format(LocalDateTime.now()))
+                .createdIn(date)
                 .isFinished(false)
+                .lastUpdateIn(date)
                 .user(user)
                 .build();
         TaskEntity addedEntity = taskRepository.save(task);
@@ -64,6 +68,8 @@ public class TaskServiceImpl implements TaskServiceI {
                 new UsernameNotFoundException("Usuario no encontrado")
         );
         List<TaskResponse> taskList = new ArrayList<>();
+        // sort list by isFinished and createdIn/finishedIn
+
         // it does another query to take the tasks
         userEntity.getTasks().forEach(task ->
                 taskList.add(
@@ -80,5 +86,34 @@ public class TaskServiceImpl implements TaskServiceI {
     @Override
     public ResponseEntity<TaskResponse> getTaskById() {
         return null;
+    }
+
+    @Override
+    public ResponseEntity<TaskResponse> updateTask(TaskUpdateRequest updateRequest, String username) {
+        TaskEntity task = taskRepository.findById(updateRequest.id()).orElseThrow(() ->
+                new TaskNotFound("No existe la tarea con el id: " + updateRequest.id())
+        );
+        if (!task.getUser().getUserName().equals(username)){
+            throw new AccessDeniedException("No eres el propietario de la tarea");
+        }
+        boolean updatedFlag = false;
+        if (updateRequest.isFinished() != null && updateRequest.isFinished() != task.isFinished()){
+            task.setFinished(updateRequest.isFinished());
+            updatedFlag = true;
+        }
+        if (updateRequest.title() != null && !updateRequest.title().equals(task.getTitle())){
+            task.setTitle(updateRequest.title());
+            updatedFlag = true;
+        }
+        if (!updatedFlag) throw new TaskValidationException("Los datos recibidos son los mismos que los existentes");
+        task.setLastUpdateIn(DateTimeFormatterUtil.format(LocalDateTime.now()));
+        TaskEntity taskUpdated = taskRepository.save(task);
+        return ResponseEntity.ok().body(
+                new TaskResponse(
+                        taskUpdated.getId(),
+                        task.getTitle(),
+                        task.isFinished()
+                )
+        );
     }
 }

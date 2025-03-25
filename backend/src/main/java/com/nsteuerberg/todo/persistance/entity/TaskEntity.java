@@ -22,7 +22,7 @@ public class TaskEntity {
     @Column(nullable = false)
     private String createdIn;
     @Column()
-    private String finishedIn;
+    private String lastUpdateIn;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")// nombre de la columna a generar
     private UserEntity user;
